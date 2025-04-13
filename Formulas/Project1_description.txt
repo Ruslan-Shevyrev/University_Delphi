@@ -1,0 +1,116 @@
+program Project1;
+
+{$APPTYPE CONSOLE}
+
+uses
+  SysUtils,
+  windows;
+
+type
+  rec = record
+  rectype : string;
+  values : variant;
+end;
+
+
+var
+  arr : array of rec;
+  s, s1 : string;
+  i,k : integer;
+
+
+begin
+  SetConsoleCP(1251);
+  SetConsoleOutputCP(1251);
+  k:=0;
+  setlength(arr,100);
+  writeln('Введите выражение');
+  readln(s);
+  for i :=1 to length(s) do
+
+     case s[i] of
+     '+','-','*','/' : begin
+                          k:=k+1;
+                          arr[k].rectype:='Math';
+                          arr[k].values:=char(s[i]);
+                          k:=k+1;
+                        end;
+     '('              : begin
+                          k:=k+1;
+                          arr[k].rectype:='brack';
+                          arr[k].values:=char(s[i]);
+                          k:=k+1;
+                        end;
+
+     ')'               : begin
+                          k:=k+1;
+                          arr[k].rectype:='brack';
+                          arr[k].values:=char(s[i]);
+                          k:=k+1;
+                        end
+                        else
+                        begin
+                          if ((s[i+1]<> '(') and (s[i+1]<> ')') and (s[i+1]<> '+') and (s[i+1]<> '-') and (s[i+1]<> '*') and (s[i+1]<> '/') and (i<length(s))) then
+                         arr[k].values:=arr[k].values+s[i]
+                          else
+                          begin
+
+                          arr[k].values:=arr[k].values+s[i];
+                          arr[k].rectype:='Val';
+                          arr[k].values:=double(arr[k].values);
+                          end;
+                        end
+     end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {  begin
+    if ((s[i]<> '(') and (s[i]<> ')') and (s[i]<> '+') and (s[i]<> '-') and (s[i]<> '*') and (s[i]<> '/')) then
+      begin
+      arr[k].rectype:='Val';
+      s1:=s1+s[i];
+      end
+    else
+
+      if ((s[i] = '(') or (s[i] = ')')) then
+        begin
+      //  TvarData(arr[k].values).VType:=vardouble;
+      //  arr[k].values:=strtofloat(s1);
+      //  s1:='';
+        k:=k+1;
+        arr[k].rectype:='brack';
+        arr[k].values:=s[i];
+        k:=k+1;
+        end
+      else
+        begin
+        //TvarData(arr[k].values).VType:=vardouble;
+        //arr[k].values:=strtofloat(s1);
+       // s1:='';
+        k:=k+1;
+        arr[k].rectype:='Math';
+        arr[k].values:=s[i];
+        k:=k+1;
+        end;
+    end;
+     // TvarData(arr[k].values).VType:=vardouble;
+   //     arr[k].values:=strtofloat(s1);
+ //       s1:=''; }
+        for i := 0 to k do
+          write(arr[i].values,' ');
+
+          writeln(arr[0].values+arr[2].values);
+          readln;
+end.
